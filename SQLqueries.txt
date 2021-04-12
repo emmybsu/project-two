@@ -1,0 +1,61 @@
+-- query to get team total salary by year ending 2016 918 rows all the data in the set
+
+select yearid,teamid, SUM(salary)
+FROM salaries
+GROUP BY 
+yearid,
+teamid
+ORDER BY
+yearid;
+
+-- get total wins by team by year ending 2016 918 rows
+select * from teams
+
+select yearid,teamid,w
+FROM teams
+WHERE yearid >= 1985 and yearid <=2016
+
+--Total query code
+--This will obtain all the salary totals and wins by team by year--
+--
+select salaries.yearid,salaries.teamid,SUM(salaries.salary) AS total_salary, MAX(teams.w) AS wins,MAX(teams.hr) as hr
+FROM teams
+INNER Join salaries ON
+teams.teamid = salaries.teamid
+GROUP BY
+salaries.yearid,
+salaries.teamid
+ORDER BY 
+salaries.yearid
+
+
+--
+select salaries.yearid,salaries.teamid,SUM(salaries.salary) AS total_salary, 
+MAX(teams.w) AS wins,MAX(teams.hr) as hr, MAX(teams.attendance) as attendace
+FROM teams
+INNER Join salaries ON
+teams.teamid = salaries.teamid
+GROUP BY
+salaries.yearid,
+salaries.teamid
+ORDER BY 
+salaries.yearid
+--
+
+
+
+--
+--This will pull players and thier birth city,state,country
+--
+SELECT people.namegiven, people.birthcity, people.birthstate, people.birthcountry, fielding.pos
+FROM people
+INNER JOIN fielding ON
+people.playerid = fielding.playerid
+
+
+--get USA state player counts
+select birthstate, COUNT(birthstate)
+FROM people
+WHERE birthcountry = 'USA'
+GROUP BY birthstate
+

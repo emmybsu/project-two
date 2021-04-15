@@ -7,11 +7,19 @@
     background-color: lightgrey;
 }
 
+.bg-dark {
+  background-color: #010044;
+}
+
 .text-black {
     color: black;
 }
 
+.text-grey {
+  color:lightgray;
+}
 
+/* header info */
 
 ul {
     list-style-type: none;
@@ -19,7 +27,7 @@ ul {
     padding: 0;
     overflow: hidden;
     border: 1px solid #e7e7e7;
-    background-color: #f3f3f3;
+    background-color: #010044;
   }
   
   li {
@@ -28,17 +36,21 @@ ul {
   
   li a {
     display: block;
-    color: #666;
+    color:lightgray;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
+    font-weight: bold;
   }
   
   li a:hover:not(.active) {
-    background-color: #ddd;
+    background-color: rgb(170, 170, 170);
+    color: black;
   }
   
-  li a.active {
+/*   
+li a.active {
     color: white;
-    background-color: #4CAF50;
-  }
+    background-color: #3657FC;
+}
+*/

@@ -1,7 +1,7 @@
 // Creating map object
 var myMap = L.map("map", {
-    center: [34.0522, -118.2437],
-    zoom: 8
+    center: [31.3038, -96.2528],
+    zoom: 4
   });
   
   // Adding tile layer
@@ -45,8 +45,7 @@ var myMap = L.map("map", {
   
       // Binding a pop-up to each layer
       onEachFeature: function(feature, layer) {
-        layer.bindPopup("State: " + feature.properties.NAME + "<br>Number of Players By State<br>" +
-          "$" + feature.properties.COUNT);
+        layer.bindPopup("State: " + feature.properties.name + "<br>Number of Players<br>" + feature.properties.Count);
       }
     }).addTo(myMap);
   

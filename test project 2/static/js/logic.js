@@ -26,7 +26,7 @@ var myMap = L.map("map", {
     geojson = L.choropleth(data, {
   
       // Define what  property in the features to use
-      valueProperty: "NUMBER",
+      valueProperty: "Count",
   
       // Set color scale
       scale: ["#ffffb2", "#b10026"],
@@ -45,8 +45,8 @@ var myMap = L.map("map", {
   
       // Binding a pop-up to each layer
       onEachFeature: function(feature, layer) {
-        layer.bindPopup("State: " + feature.properties.NAME + "<br>Number of Players From State<br>" +
-          "$" + feature.properties.NUMBER);
+        layer.bindPopup("State: " + feature.properties.NAME + "<br>Number of Players By State<br>" +
+          "$" + feature.properties.COUNT);
       }
     }).addTo(myMap);
   

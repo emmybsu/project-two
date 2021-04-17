@@ -1,0 +1,22 @@
+CREATE TABLE PlayerHome 
+As
+select birthstate, COUNT(birthstate) from people
+Where birthCountry = 'USA'
+group by birthstate
+order by 
+birthstate
+
+CREATE TABLE  wins 
+as
+select s.yearid,s.teamid,sum(s.salary) as Total_Sal, t.w, t.attendance
+FROM teams t
+INNER Join salaries s ON
+t.teamid = s.teamid and s.yearid = t.yearid
+GROUP BY 
+s.teamid,
+s.yearid,
+t.w,
+t.attendance
+ORDER BY 
+s.yearid,
+s.teamid

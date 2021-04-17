@@ -62,6 +62,51 @@ def players_home():
     print(player_home)
     return jsonify(player_home)
 
+@app.route('/map')
+def map():
+    '''Main Map Route.'''
+
+    # get default data
+    data = session.query(Passing).order_by(Passing.passing_yards.desc())
+
+    # default dropdowns
+    options = populate_dropdown('passing')
+    options = options.json
+    options = [x.capitalize().replace('_', ' ') for x in options]
+
+    return render_template('map.html', data=data, options=options)
+
+@app.route('/map/<table>/<col>')
+def map_json(table, col):
+    '''Returns map json data.'''
+
+    # load map data
+    map_data = json.load(open('json/states.json'))
+    
+    # load and group by player states
+    player_data = pd.read_sql_table(table, engine)[['name', 'birth_place', col]]
+
+    # handle height and weight issues
+    if col in ['height', 'weight']:
+        player_data[col] = player_data[col].astype(float)
+
+    # get states and group by state of birth
+    birth_place = player_data['birth_place'].str.split(' , ', n = 1, expand = True)
+    player_data['birth_place_state'] = birth_place[1]
+    grouped = player_data.groupby(['birth_place_state']).sum()
+
+    # build geoJson data
+    for ind, obj in enumerate(map_data['features']):
+        initials = state_codes_mod.state_codes[map_data['features'][ind]['properties']['name']]
+
+        # set the new density to the required stat
+        try:
+            map_data['features'][ind]['properties']['density'] = int(grouped.loc[[initials],[col]][col])
+        except KeyError:
+            map_data['features'][ind]['properties']['density'] = 0
+
+    return map_data
+
 
 if __name__ == "__main__":
     app.run(debug=True)

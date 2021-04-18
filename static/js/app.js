@@ -9,6 +9,7 @@ d3.json("Resources/salary_win_data.json").then((sampleData) => {
   });
   console.log("Year: ", subIDs);
   var year = sampleData.map(year => year.Year);
+  // do this for uniTeams
   var uniYear = year.filter((v, i, s) => {
   return s.indexOf(v) === i
 })
@@ -28,10 +29,7 @@ d3.json("Resources/salary_win_data.json").then((sampleData) => {
 // //allows user to select IDs and dashboard changes based on ID change from menu
 // // <select id="selDataset" onchange="optionChanged(this.value)"></select>
 function optionChanged (selIDs){
-   d3.json('Resources/salary_win_data.json').then((sampleData) => {
-     
-
-
+   d3.json('Resources/salary_win_data.json').then((sampleData) => {     
 //start of creating an empty array to store each object
 // from week 14,day 2, act 08
     // create samples associated to ID 
@@ -44,7 +42,7 @@ var year = sampleData.map(year => year.Year);
 var uniYear = year.filter((v, i, s) => {
   return s.indexOf(v) === i
 })
-
+});
 // console.log('attendance')
 // console.log(attendance)
 // console.log('salary')
@@ -55,7 +53,7 @@ var uniYear = year.filter((v, i, s) => {
 // console.log(wins)
 // console.log('year')
 // console.log(year)
-   });
+
 // from week 15 day 3 activity 5
 
 // //function getAnnualData() {
@@ -119,7 +117,80 @@ function buildPlot() {
       }
     };
 
-    var trace2 = {}
+    var data = [trace1];
+
+    var layout = {
+      title: `Salary vs Wins by Year`,
+      xaxis: {title:'Wins'},
+      yaxis: {title:"Salary"},
+      images: [
+        {
+          x: 1,
+          y: 0,
+          sizex: 1.5,
+          sizey: 1.5,
+          source: "https://www.betfirm.com/wp-content/uploads/2015/04/bet-online-baseball.jpg",
+          xanchor: "right",
+          xref: wins,
+          yanchor: "bottom",
+          yref: salary,
+          opacity:0.15,
+          padding:{t:1,l:3,b:1,r:1}
+     
+        }
+      ]
+      
+      
+    };
+
+    Plotly.newPlot("bubble", data, layout, {responsive: true});
+
+  });
+}
+console.log(selIDs)   
+buildPlot();
+
+
+//
+function buildPlot2() { 
+
+  d3.json('Resources/salary_win_data.json').then((sampleData) => {
+    var results = sampleData.filter(annual => annual.Year == selIDs);
+    // Grab values from the response json object to build the plots
+    var attendance = results.map(att => att.Attendance);
+    var salary = results.map(sal => sal.Salary);
+    var teams = results.map(te => te['Team ID']);
+    var wins = results.map(wins => wins.Wins);
+    var year = results.map(year => year.Year);
+
+    
+    // var trace1 = {      
+    //   mode: 'markers+text',
+    //   type: 'scatter',
+    //   x: wins,
+    //   y: attendance,
+    //   text: ["ATL", "BAL", "BOS", "CAL", "CHA", "CHN", 
+    //   "CIN", "CLE", "DET", "HOU", "KCA", "LAN", "MIN", "ML4",
+    //    "MON", "NYA", "NYN", "OAK", "PHI", "PIT",
+    //    "SDN", "SEA", "SFN", "SLN", "TEX", "TOR"],
+    //   line: {
+    //     color: "#17BECF"
+    //   }
+    // };
+    
+    var trace2 = {
+      x: wins,
+      y: attendance,
+      mode: 'markers+text',
+      type: 'scatter',
+      text: ["ATL", "BAL", "BOS", "CAL", "CHA", "CHN", 
+      "CIN", "CLE", "DET", "HOU", "KCA", "LAN", "MIN", "ML4",
+       "MON", "NYA", "NYN", "OAK", "PHI", "PIT",
+       "SDN", "SEA", "SFN", "SLN", "TEX", "TOR"]
+
+    };
+
+    //var trace2 = {}
 
     // // Candlestick Trace
     // var trace2 = {
@@ -131,117 +202,54 @@ function buildPlot() {
     //   close: closingPrices
     // };
 
-    var data = [trace1];
+    var data = [trace2];
 
     var layout = {
-      title: `Baseball year`,
-      // xaxis: {
-      //   range: [startDate, endDate],
-      //   type: "date"
-      // },
-      // yaxis: {
-      //   autorange: true,
-      //   type: "linear"
-      // },
-      // showlegend: false
+      title: `Attendance vs Wins by Year`,
+      xaxis: {title:'Wins'},
+      yaxis: {title:"Attendance"}, 
+      images: [
+        {
+          x: 1,
+          y: 0,
+          sizex: 1.2,
+          sizey: 1.65,
+          source: "https://media.bizj.us/view/img/10144720/howtobaseballdifferentiation.jpg",
+          xanchor: "right",
+          xref: wins,
+          yanchor: "bottom",
+          yref: salary,
+          opacity:0.15,
+          padding:{t:1,l:1,b:1,r:1}
+        }
+      ]
+      // images: [
+      //   {
+      //     x: 1,
+      //     y: 1.05,
+      //     sizex: 0.2,
+      //     sizey: 0.2,
+      //     source: "https://media.bizj.us/view/img/10144720/howtobaseballdifferentiation.jpg",
+      //     xanchor: "right",
+      //     xref: "paper",
+      //     yanchor: "bottom",
+      //     yref: "paper"
+      //   }
+      // ]
+  
     };
 
-    Plotly.newPlot("bubble", data, layout);
+
+
+    Plotly.newPlot("attendance", data, layout, {responsive: true});
 
   });
 }
 console.log(selIDs)   
-buildPlot();
-
-//     var samples = sampleData.samples;
-//     var results = samples.filter(annual => annual.Year == selIDs);
-   
-// //     //first individual result
-//     var result = results[0];
-     
-//     //create bar chart
-//     // identify 'sample_values' as values for the chart
-//     // identify 'otu_ids' as labels for the chart
-//     // identify 'otu_labels' as hovertext for the chart
- 
-//     var values = results[0].sample_values
-//     var labels = results[0].otu_ids
-//     var hover = results[0].otu_labels
-
-//     var y_axis = labels.slice(0,10).map(labels => `OTU ${labels}`).reverse();
-
-//   //create trace variable for the bar chart
-
-//   var bar_trace = {
-//     y: y_axis,
-//     x: values.slice(0,10).reverse(),
-//     text: hover.slice(0,10).reverse(),
-//     type: "bar",
-//     orientation: "h"
-//   };
-//   // create the data variable
-//   var data = [bar_trace];
-//   // create the layout variable
-//   var bar_layout = {
-//     title: "Top 10 OTUs",
-//     yaxis: {
-//       tickmode: "linear"
-//     },
-//     margin: {
-//       l: 100,
-//       r: 100,
-//       t: 100,
-//       b: 30
-//     }
-//   };
-//   Plotly.newPlot('bar', data, bar_layout);
-
-//   // create bubble chart
-//   //* Use `otu_ids` for the x values. = labels
-// //  * Use `sample_values` for the y values. = values
-//   //* Use `sample_values` for the marker size. = values
-//   //* Use `otu_ids` for the marker colors. = labels
-//   //* Use `otu_labels` for the text values. = hover
-//   //results = dict of ID
-//   //result = list of one key value with  ID array
-  
+buildPlot2();
 
 
-// // create individual's demographic information per ID
 
-// var demographics = sampleData.metadata;
 
-// var demoHTML = d3.select('#sample-metadata');
-// var detailsID = demographics.filter(person => person.id == selIDs);
-//    });
-
-// // individual's demographics
-// var result = detailsID[0];
-// demoHTML.html('');
-// Object.entries(result).forEach(([key,value]) => {
-//   demoHTML.append('h5').text(`${key}: ${value}`);
-
-// })
-
-// var bubble_trace = {
-//   x: labels,
-//   y: values,
-//   text: hover,
-//   mode: "markers",
-//   marker: {
-//     size: values,
-//     color: labels,
-//     colorscale: "Earth"
-//   }
-// };
-
-// var data = [bubble_trace];
-
-// var bubble_layout = {
-//   hovermode:  "closest", 
-//   xaxis: {title: "Display of Each Microbe in the Navel (Operational Taxonomic Unit (OTU))"},
-//   margin: {t:30}
-// };
-// Plotly.newPlot("bubble", data, bubble_layout);
 
 };

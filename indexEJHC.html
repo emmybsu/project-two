@@ -1,65 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Baseball</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-</head>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Baseball</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  </head>
 
-<body>
+  <body>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12 jumbotron text-center">
-        <h1>Baseball Dashboard</h1>
-        <p>Use the interactive charts below to explore the dataset</p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-2">
-        <div class="well">
-          <h4>Year:</h4>
-          <!-- will allow user to change the Team IDs -->
-          <select id="selDataset" onchange="optionChanged(this.value)"></select>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 jumbotron text-center">
+          <h1>Baseball Dashboard</h1>
+          <p>Use the interactive drop-down lists below to explore the dataset</p>
         </div>
-        <!-- <div class="panel panel-primary"> -->
-          <!-- <div class="panel-heading"> -->
-              <!-- will display each team's average salary, average attendance, and 
-            average wins over 20 years -->
-            <!-- <h3 class="panel-title">Teams Information</h3>   -->
-          </div>
-          <!-- <div id="sample-metadata" class="panel-body"></div> -->
-        </div>
-      </div>
-     
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div id="bubble"></div>
-      </div>
-
-      <div class="col-md-6">
-        <div id="attendance"></div>
       </div>
       <div class="row">
-        <div class="col-md-2">
-          
+        <div class="col-md-12">
+          Year:
+          <!-- will allow user to change the Team IDs -->
+          <select id="selYear" onchange="optionYear(this.value)"></select>
+          &nbsp; &nbsp; &nbsp;
+                 
+
+          Team:
+          <select id="selTeam" onchange="optionTeam(this.value)"></select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+            <p></p>
+        </div>
+   
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div id="bubble"></div>
+        </div>
+
+        <div class="col-md-6">
+          <div id="attendance"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div id="table-area" class="">
+            <table id="ufo-table" class="table table-striped" border="1">
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
 
     </div>
-  </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <script src="./static/js/app.js"></script>
-  <!-- <script src="./static/js/bonus.js"></script> -->
-  <script src="./Resources/People_1986_2016.csv"></script>
-  <script src="./Resources/player_home_state.json"></script>
-  <script src="./Resources/salary_win_data.json"></script>
-  <script src="./Resources/Teams_1985_2016.csv"></script>
-  
-</body>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <script src="./static/js/salary_win.js"></script>
+    <script src="./static/js/appdc.js"></script>
+
+  </body>
 
 </html>

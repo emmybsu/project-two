@@ -180,14 +180,61 @@ function optionYear(selected_yr) {
 
 function optionTeam(selected_team) {
   console.log("selected_team=", selected_team);
-
   filteredRows = baseballData.filter(row => row['Team ID'] == selected_team);
-
+  
   console.log("filteredRows")
   console.log(filteredRows)
-
+  // bubble tag 
+  year19_list = [];
+  win19_list = [];
+  text19_list = [];
+  year20_list = [];
+  win20_list = [];
+  text20_list = [];
+  filteredRows.forEach((row) => {
+    // console.log("row")
+    // console.log(row)
+    if (row.Year < 2000) {
+      year19_list.push(row.Year);
+      win19_list.push(row.Wins);
+      text19_list.push("Attendance: " + row.Attendance + "<br>" + "Salary: " + row.Salary);
+    } else {
+      year20_list.push(row.Year);
+      win20_list.push(row.Wins);
+      text20_list.push("Attendance: " + row.Attendance + "<br>" + "Salary: " + row.Salary);
+    }
+  });
+  var y19_label = year19_list.map(year => `YEAR ${year}`);
+  var bar_trace = {
+    y: y19_label,
+    x: win19_list,
+    text: text19_list,
+    type: "bar",
+    orientation: "h",
+  };
+  var data = [bar_trace];
+  var bar_layout = {
+    title: selected_team + " - Wins & Attendance & Salaries in 1900s",
+    margin: { t: 30, l: 150 }
+  };
+  Plotly.newPlot("bubble", data, bar_layout);
+  // attendance tag
+  var y20_label = year20_list.map(year => `YEAR ${year}`);
+  var bar_trace = {
+    y: y20_label,
+    x: win20_list,
+    text: text20_list,
+    type: "bar",
+    orientation: "h",
+  };
+  var data = [bar_trace];
+  var bar_layout = {
+    title: selected_team + " - Wins & Attendance & Salaries in 2000s",
+    margin: { t: 30, l: 150 }
+  };
+  Plotly.newPlot("attendance", data, bar_layout);
+  //Table View
   tbody.html("");
-
   const tbl_header = tbody.append("tr");
   let header = tbl_header.append("th");
   header.text("Attendance");
@@ -199,20 +246,19 @@ function optionTeam(selected_team) {
   header.text("Wins");
   header = tbl_header.append("th");
   header.text("Year");
-
   filteredRows.forEach((row) => {
     // Create tr for each row of the table
     const tbl = tbody.append("tr");
-
-    console.log("row")
-    console.log(row)
-
+    // console.log("row")
+    // console.log(row)
     // Create multiple td cells for each row
     Object.values(row).forEach((value) => {
       let cell = tbl.append("td");
       cell.text(value);
     });
   });
-
-}
-
+  var elements = document.getElementsByTagName('select');
+  for (var i = 0; i < elements.length; i++) {
+    elements[i].selectedIndex = 0;
+  }
+} 
